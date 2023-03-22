@@ -1,7 +1,7 @@
 import { signIn, signOut } from "next-auth/react";
 import { useSession } from "next-auth/react";
 
-function Index() {
+function Auth() {
   const { status, data: session } = useSession();
 
   if (status === "loading") {
@@ -51,4 +51,4 @@ function Index() {
   return <div></div>;
 }
 
-export default Index;
+export default Auth;

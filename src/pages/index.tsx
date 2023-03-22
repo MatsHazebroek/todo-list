@@ -1,5 +1,5 @@
-import Auth from "n/components/auth";
-import Login from "n/components/login";
+import Auth from "n/components/auth/Auth";
+import Login from "n/components/login/Login";
 import { type NextPage } from "next";
 import Head from "next/head";
 
