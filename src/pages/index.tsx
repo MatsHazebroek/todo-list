@@ -1,9 +1,12 @@
 import Auth from "n/components/auth/Auth";
-import Login from "n/components/login/Login";
 import { type NextPage } from "next";
+// import { useSession } from "next-auth/react";
+import { api } from "n/utils/api";
 import Head from "next/head";
 
 const Home: NextPage = () => {
+  // const { data: session } = useSession();
+
   return (
     <>
       <Head>
@@ -12,10 +15,8 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="flex min-h-screen flex-col items-center justify-center">
-        <div>
-          <Login>
-            <Auth></Auth>
-          </Login>
+        <div className="items-center justify-center">
+          <Auth></Auth>
         </div>
       </main>
     </>
