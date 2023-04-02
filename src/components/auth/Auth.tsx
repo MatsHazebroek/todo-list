@@ -1,11 +1,12 @@
 import { signIn, signOut } from "next-auth/react";
 import { useSession } from "next-auth/react";
+import Loading from "../loading"
 
 function Auth() {
   const { status, data: session } = useSession();
 
   if (status === "loading") {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   if (status === "unauthenticated") {
@@ -24,7 +25,7 @@ function Auth() {
               className="rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
               onClick={() => {
                 void (async () => {
-                  await signIn("github").catch(() => {
+                  await signIn("google").catch(() => {
                     return;
                   });
                   return;
