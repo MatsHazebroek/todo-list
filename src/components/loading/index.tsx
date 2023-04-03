@@ -1,14 +1,13 @@
 import { type NextPage } from "next";
 
-
 const index: NextPage = () => {
-    return (
-        <>
-            <div className="absolute right-1/2 bottom-1/2  transform translate-x-1/2 translate-y-1/2 ">
-                <div className="border-t-transparent border-solid animate-spin  rounded-full border-blue-400 border-8 h-64 w-64"></div>
-            </div>
-        </>
-    )
-}
+  return (
+    <>
+      <div className="absolute right-1/2 bottom-1/2  translate-x-1/2 translate-y-1/2 transform ">
+        <div className="h-64 w-64 animate-spin  rounded-full border-8 border-solid border-blue-400 border-t-transparent"></div>
+      </div>
+    </>
+  );
+};
 
 export default index;
