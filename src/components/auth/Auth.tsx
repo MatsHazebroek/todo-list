@@ -1,6 +1,7 @@
-import { signIn, signOut } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import { useSession } from "next-auth/react";
-import Loading from "../loading"
+import Loading from "../loading";
+import Dashboard from "../dashboard";
 
 function Auth() {
   const { status, data: session } = useSession();
@@ -43,18 +44,7 @@ function Auth() {
   if (status === "authenticated" && session !== null) {
     return (
       <>
-        <button
-          onClick={() => {
-            void (async () => {
-              await signOut().catch(() => {
-                return;
-              });
-              return;
-            })();
-          }}
-        >
-          Sign out
-        </button>
+        <Dashboard />
       </>
     );
   }
