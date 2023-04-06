@@ -1,5 +1,6 @@
 import { type NextPage } from "next";
 import { signOut } from "next-auth/react";
+import Link from "next/link";
 
 const index: NextPage = () => {
   return (
@@ -15,8 +16,8 @@ const index: NextPage = () => {
               </div>
             </li>
             <li>
-              <a
-                href="#"
+              <Link
+                href="/"
                 className="relative flex h-11 flex-row items-center border-l-4 border-transparent pr-6 text-gray-600 hover:border-indigo-500 hover:bg-gray-50 hover:text-gray-800 focus:outline-none"
               >
                 <span className="ml-4 inline-flex items-center justify-center">
@@ -38,9 +39,9 @@ const index: NextPage = () => {
                 <span className="ml-2 truncate text-sm tracking-wide">
                   Dashboard
                 </span>
-              </a>
+              </Link>
             </li>
-            <li>
+            {/* <li>
               <a
                 href="#"
                 className="relative flex h-11 flex-row items-center border-l-4 border-transparent pr-6 text-gray-600 hover:border-indigo-500 hover:bg-gray-50 hover:text-gray-800 focus:outline-none"
@@ -68,8 +69,8 @@ const index: NextPage = () => {
                   New
                 </span>
               </a>
-            </li>
-            <li>
+            </li> */}
+            {/* <li>
               <a
                 href="#"
                 className="hover: relative flex h-11 flex-row items-center border-l-4 border-transparent pr-6 text-gray-600 hover:border-indigo-500 hover:text-gray-800 focus:outline-none"
@@ -94,7 +95,7 @@ const index: NextPage = () => {
                   Messages
                 </span>
               </a>
-            </li>
+            </li> */}
             <li>
               <a
                 href="#"
@@ -117,17 +118,17 @@ const index: NextPage = () => {
                   </svg>
                 </span>
                 <span className="ml-2 truncate text-sm tracking-wide">
-                  Notifications
+                  Notificaties
                 </span>
-                <span className="ml-auto rounded-full bg-red-50 px-2 py-0.5 text-xs font-medium tracking-wide text-red-500">
+                {/* <span className="ml-auto rounded-full bg-red-50 px-2 py-0.5 text-xs font-medium tracking-wide text-red-500">
                   1.2k
-                </span>
+                </span> */}
               </a>
             </li>
             <li className="px-5">
               <div className="flex h-8 flex-row items-center">
                 <div className="text-sm font-light tracking-wide text-gray-500">
-                  Tasks
+                  Taken
                 </div>
               </div>
             </li>
@@ -153,13 +154,20 @@ const index: NextPage = () => {
                   </svg>
                 </span>
                 <span className="ml-2 truncate text-sm tracking-wide">
-                  Available Tasks
+                  Beschikbare Taken
                 </span>
               </a>
             </li>
+            <li className="px-5">
+              <div className="flex h-8 flex-row items-center">
+                <div className="text-sm font-light tracking-wide text-gray-500">
+                  Admin
+                </div>
+              </div>
+            </li>
             <li>
-              <a
-                href="#"
+              <Link
+                href="Users"
                 className="relative flex h-11 flex-row items-center border-l-4 border-transparent pr-6 text-gray-600 hover:border-indigo-500 hover:bg-gray-50 hover:text-gray-800 focus:outline-none"
               >
                 <span className="ml-4 inline-flex items-center justify-center">
@@ -179,17 +187,17 @@ const index: NextPage = () => {
                   </svg>
                 </span>
                 <span className="ml-2 truncate text-sm tracking-wide">
-                  Clients
+                  Users
                 </span>
-                <span className="ml-auto rounded-full bg-green-50 px-2 py-0.5 text-xs font-medium tracking-wide text-green-500">
+                {/* <span className="ml-auto rounded-full bg-green-50 px-2 py-0.5 text-xs font-medium tracking-wide text-green-500">
                   15
-                </span>
-              </a>
+                </span> */}
+              </Link>
             </li>
             <li className="px-5">
               <div className="flex h-8 flex-row items-center">
                 <div className="text-sm font-light tracking-wide text-gray-500">
-                  Settings
+                  Instellingen
                 </div>
               </div>
             </li>
@@ -215,13 +223,13 @@ const index: NextPage = () => {
                   </svg>
                 </span>
                 <span className="ml-2 truncate text-sm tracking-wide">
-                  Profile
+                  Profiel
                 </span>
               </a>
             </li>
             <li>
-              <a
-                href="#"
+              <Link
+                href="Instellingen"
                 className="relative flex h-11 flex-row items-center border-l-4 border-transparent pr-6 text-gray-600 hover:border-indigo-500 hover:bg-gray-50 hover:text-gray-800 focus:outline-none"
               >
                 <span className="ml-4 inline-flex items-center justify-center">
@@ -247,9 +255,9 @@ const index: NextPage = () => {
                   </svg>
                 </span>
                 <span className="ml-2 truncate text-sm tracking-wide">
-                  Settings
+                  Instellingen
                 </span>
-              </a>
+              </Link>
             </li>
             <li>
               <a
@@ -283,7 +291,7 @@ const index: NextPage = () => {
                       })();
                     }}
                   >
-                    Sign out
+                    Log uit
                   </button>
                 </span>
               </a>
