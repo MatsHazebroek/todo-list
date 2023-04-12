@@ -8,9 +8,11 @@ export const tasksRouter = createTRPCRouter({
     .query(async ({ctx  }) => {
         return await prisma.tasks.findMany({
             select: {
+                id: true,
                 userId: true,
                 title: true,
-                description: true
+                description: true,
+                status: true,
             },
             where: {
                 userId: ctx.session.user.id
@@ -21,7 +23,8 @@ export const tasksRouter = createTRPCRouter({
     createTasks: protectedProcedure
     .input(z.object({
         title: z.string(),
-        description: z.string()
+        description: z.string(),
+        status: z.string(),
 
     }))
     .mutation(async ({
@@ -32,6 +35,7 @@ export const tasksRouter = createTRPCRouter({
                 userId: ctx.session.user.id,
                 title: input.title,
                 description: input.description,
+                status: input.status,
             },
         
             // COMMENT: if you want to send a specific thing back to the user
@@ -41,6 +45,27 @@ export const tasksRouter = createTRPCRouter({
         }).catch((err) => {
             console.log(err)
             throw new TRPCError({code: "BAD_REQUEST", message: "Something went wrong"});
+        })
+    }),
+    deleteTask: protectedProcedure
+    .input(z.object({
+        id: z.string()
+    }))
+    .mutation(async ({ctx, input }) => {
+        const isMyTask =  await prisma.tasks.findUniqueOrThrow({
+            where: {
+               id: input.id 
+            }
+        }).catch(() => {
+            throw new TRPCError({message: "task does not exist", code: "BAD_REQUEST"});
+        });
+        if(isMyTask.userId != ctx.session.user.id) {
+            throw new TRPCError({message: "task does not exist", code: "BAD_REQUEST"});
+        }
+        return await prisma.tasks.delete({
+            where: {
+                id: input.id
+            }
         })
     })
 });
