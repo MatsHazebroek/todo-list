@@ -9,7 +9,7 @@ function Login() {
         <meta name="description" content="" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="flex items-center justify-center text-center">
+      <div className="flex h-screen items-center justify-center text-center">
         <div className="h-96 w-96 rounded bg-blue-200 shadow-lg">
           <h1 className="p-2 text-center text-4xl font-bold">Login</h1>
           <p className="text-1xl p-2">
@@ -18,24 +18,22 @@ function Login() {
             taken toevoegen, bewerken en verwijderen.
           </p>
 
-          <div className="items-center justify-center">
-            <button
-              className="rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
-              onClick={() => {
-                void (async () => {
-                  await signIn("google", {
-                    redirect: true,
-                    callbackUrl: "/",
-                  }).catch(() => {
-                    return;
-                  });
+          <button
+            className="rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
+            onClick={() => {
+              void (async () => {
+                await signIn("google", {
+                  redirect: true,
+                  callbackUrl: "/",
+                }).catch(() => {
                   return;
-                })();
-              }}
-            >
-              Log in
-            </button>
-          </div>
+                });
+                return;
+              })();
+            }}
+          >
+            Log in
+          </button>
         </div>
       </div>
     </>

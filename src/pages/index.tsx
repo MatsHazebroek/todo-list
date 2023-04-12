@@ -75,7 +75,11 @@ const PageContent = () => {
                   className="rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
                   onClick={() => {
                     setModal(true);
-                    // createTask.mutate({ title: "test", description: "kaas" });
+                    createTask.mutate({
+                      title: "test",
+                      description: "kaas",
+                      status: "2",
+                    });
                   }}
                 >
                   + Toevoegen
@@ -118,10 +122,10 @@ const PageContent = () => {
                 </div>
               )}
 
-              <div className="bottom-0 flex items-end justify-end">
+              <div className="flex items-end justify-end">
                 {amountChecked > 0 ? (
                   <button
-                    className="rounded bg-red-500 py-2 px-4 font-bold text-white hover:bg-red-700"
+                    className="absolute bottom-28 rounded bg-red-500 py-2 px-4 font-bold text-white hover:bg-red-700"
                     onClick={() => {
                       setDeleteModal(true);
                       [...checked].map((id) => {
