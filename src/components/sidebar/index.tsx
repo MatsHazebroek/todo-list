@@ -1,8 +1,11 @@
 import { type NextPage } from "next";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
+import { api } from "n/utils/api";
 
 const index: NextPage = () => {
+  const users = api.users.getUsers.useQuery();
+
   return (
     <>
       <div className=" top-0 left-0 flex h-screen w-64 flex-col border-r bg-white">
@@ -18,7 +21,7 @@ const index: NextPage = () => {
             <li>
               <Link
                 href="/"
-                className="relative flex h-11 flex-row items-center border-l-4 border-transparent pr-6 text-gray-600 hover:border-indigo-500 hover:bg-gray-50 hover:text-gray-800 focus:outline-none"
+                className="relative flex h-11 flex-row items-center border-l-4 border-transparent pr-6 text-gray-600 hover:border-sky-400 hover:bg-gray-50 hover:text-gray-800 focus:outline-none"
               >
                 <span className="ml-4 inline-flex items-center justify-center">
                   <svg
@@ -44,7 +47,7 @@ const index: NextPage = () => {
             {/* <li>
               <a
                 href="#"
-                className="relative flex h-11 flex-row items-center border-l-4 border-transparent pr-6 text-gray-600 hover:border-indigo-500 hover:bg-gray-50 hover:text-gray-800 focus:outline-none"
+                className="relative flex h-11 flex-row items-center border-l-4 border-transparent pr-6 text-gray-600 hover:border-sky-400 hover:bg-gray-50 hover:text-gray-800 focus:outline-none"
               >
                 <span className="ml-4 inline-flex items-center justify-center">
                   <svg
@@ -73,7 +76,7 @@ const index: NextPage = () => {
             {/* <li>
               <a
                 href="#"
-                className="hover: relative flex h-11 flex-row items-center border-l-4 border-transparent pr-6 text-gray-600 hover:border-indigo-500 hover:text-gray-800 focus:outline-none"
+                className="hover: relative flex h-11 flex-row items-center border-l-4 border-transparent pr-6 text-gray-600 hover:border-sky-400 hover:text-gray-800 focus:outline-none"
               >
                 <span className="ml-4 inline-flex items-center justify-center">
                   <svg
@@ -99,7 +102,7 @@ const index: NextPage = () => {
             <li>
               <a
                 href="#"
-                className="relative flex h-11 flex-row items-center border-l-4 border-transparent pr-6 text-gray-600 hover:border-indigo-500 hover:bg-gray-50 hover:text-gray-800 focus:outline-none"
+                className="relative flex h-11 flex-row items-center border-l-4 border-transparent pr-6 text-gray-600 hover:border-sky-400 hover:bg-gray-50 hover:text-gray-800 focus:outline-none"
               >
                 <span className="ml-4 inline-flex items-center justify-center">
                   <svg
@@ -133,9 +136,9 @@ const index: NextPage = () => {
               </div>
             </li>
             <li>
-              <a
-                href="#"
-                className="relative flex h-11 flex-row items-center border-l-4 border-transparent pr-6 text-gray-600 hover:border-indigo-500 hover:bg-gray-50 hover:text-gray-800 focus:outline-none"
+              <Link
+                href="BeschikbareTaken"
+                className="relative flex h-11 flex-row items-center border-l-4 border-transparent pr-6 text-gray-600 hover:border-sky-400 hover:bg-gray-50 hover:text-gray-800 focus:outline-none"
               >
                 <span className="ml-4 inline-flex items-center justify-center">
                   <svg
@@ -156,8 +159,9 @@ const index: NextPage = () => {
                 <span className="ml-2 truncate text-sm tracking-wide">
                   Beschikbare Taken
                 </span>
-              </a>
+              </Link>
             </li>
+
             <li className="px-5">
               <div className="flex h-8 flex-row items-center">
                 <div className="text-sm font-light tracking-wide text-gray-500">
@@ -168,7 +172,7 @@ const index: NextPage = () => {
             <li>
               <Link
                 href="Users"
-                className="relative flex h-11 flex-row items-center border-l-4 border-transparent pr-6 text-gray-600 hover:border-indigo-500 hover:bg-gray-50 hover:text-gray-800 focus:outline-none"
+                className="relative flex h-11 flex-row items-center border-l-4 border-transparent pr-6 text-gray-600 hover:border-sky-400 hover:bg-gray-50 hover:text-gray-800 focus:outline-none"
               >
                 <span className="ml-4 inline-flex items-center justify-center">
                   <svg
@@ -202,9 +206,9 @@ const index: NextPage = () => {
               </div>
             </li>
             <li>
-              <a
-                href="#"
-                className="relative flex h-11 flex-row items-center border-l-4 border-transparent pr-6 text-gray-600 hover:border-indigo-500 hover:bg-gray-50 hover:text-gray-800 focus:outline-none"
+              <Link
+                href="Profiel"
+                className="relative flex h-11 flex-row items-center border-l-4 border-transparent pr-6 text-gray-600 hover:border-sky-400 hover:bg-gray-50 hover:text-gray-800 focus:outline-none"
               >
                 <span className="ml-4 inline-flex items-center justify-center">
                   <svg
@@ -225,12 +229,12 @@ const index: NextPage = () => {
                 <span className="ml-2 truncate text-sm tracking-wide">
                   Profiel
                 </span>
-              </a>
+              </Link>
             </li>
             <li>
               <Link
                 href="Instellingen"
-                className="relative flex h-11 flex-row items-center border-l-4 border-transparent pr-6 text-gray-600 hover:border-indigo-500 hover:bg-gray-50 hover:text-gray-800 focus:outline-none"
+                className="relative flex h-11 flex-row items-center border-l-4 border-transparent pr-6 text-gray-600 hover:border-sky-400 hover:bg-gray-50 hover:text-gray-800 focus:outline-none"
               >
                 <span className="ml-4 inline-flex items-center justify-center">
                   <svg
@@ -262,7 +266,7 @@ const index: NextPage = () => {
             <li>
               <a
                 href="#"
-                className="relative flex h-11 flex-row items-center border-l-4 border-transparent pr-6 text-gray-600 hover:border-indigo-500 hover:bg-gray-50 hover:text-gray-800 focus:outline-none"
+                className="relative flex h-11 flex-row items-center border-l-4 border-transparent pr-6 text-gray-600 hover:border-sky-400 hover:bg-gray-50 hover:text-gray-800 focus:outline-none"
               >
                 <span className="ml-4 inline-flex items-center justify-center">
                   <svg

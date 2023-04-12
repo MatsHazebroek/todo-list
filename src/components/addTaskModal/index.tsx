@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 type props = {
   title: {
@@ -32,6 +32,9 @@ const Index: NextPage<props> = (props) => {
     };
   }, [props]);
 
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+
   if (props.show == false) return <></>;
   return (
     <div className="fixed top-0 left-0 z-40 h-screen w-screen">
@@ -52,28 +55,7 @@ const Index: NextPage<props> = (props) => {
           }`}
         >
           <div className="flex h-full w-full flex-col">
-            <div className="flex w-full flex-row">
-              <h2
-                className="ml-4 flex-grow"
-                style={{
-                  fontSize: props.title.size.toString() + "rem",
-                  color: props.title.color,
-                }}
-              >
-                {/* {props.title.text} */}
-              </h2>
-              {/* <button
-                className="w-7  text-2xl"
-                onClick={() => {
-                  props.onClose();
-                }}
-              >
-                X
-              </button> */}
-            </div>
             <div className="relative flex-grow p-4">
-              {/* {props.children == undefined ? null : props.children} */}
-
               {/* <!-- Modal header --> */}
               <div className="mb-4 flex items-center justify-between rounded-t border-b pb-4 dark:border-gray-600 sm:mb-5">
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
@@ -112,10 +94,13 @@ const Index: NextPage<props> = (props) => {
                     </label>
                     <input
                       type="text"
-                      name="name"
-                      id="name"
+                      name="title"
+                      id="title"
                       className="focus:ring-primary-600 focus:border-primary-600 dark:focus:ring-primary-500 dark:focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
                       placeholder="Typ hier de titel van de taak"
+                      // onChange={(event: any) => {
+                      //   setTitle(event.target.value);
+                      // }}
                       required
                     />
                   </div>
@@ -134,11 +119,30 @@ const Index: NextPage<props> = (props) => {
                       <option value="PH">Prioriteit 4</option>
                     </select>
                   </div>
+                  <div>
+                    <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+                      Datum
+                    </label>
+                    <input type="date" />
+                  </div>
+                  <div>
+                    <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+                      Datum
+                    </label>
+                    <input type="date" />
+                  </div>
+                  {/* <div className="sm:col-span-2">
+                    <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+                      Datum
+                    </label>
+                    <input type="date" />
+                  </div>
                   <div className="sm:col-span-2">
                     <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
                       Datum
                     </label>
-                  </div>
+                    <input type="date" />
+                  </div> */}
                   <div className="sm:col-span-2">
                     <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
                       Beschrijving
