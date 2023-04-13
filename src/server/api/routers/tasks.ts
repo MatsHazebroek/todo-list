@@ -11,8 +11,10 @@ export const tasksRouter = createTRPCRouter({
                 id: true,
                 userId: true,
                 title: true,
-                description: true,
                 status: true,
+                startDate: true,
+                endDate: true,
+                description: true,
             },
             where: {
                 userId: ctx.session.user.id
@@ -23,8 +25,10 @@ export const tasksRouter = createTRPCRouter({
     createTasks: protectedProcedure
     .input(z.object({
         title: z.string(),
-        description: z.string(),
         status: z.string(),
+        startDate: z.date(),
+        endDate: z.date(),
+        description: z.string(),
 
     }))
     .mutation(async ({
@@ -34,8 +38,10 @@ export const tasksRouter = createTRPCRouter({
             data: {
                 userId: ctx.session.user.id,
                 title: input.title,
-                description: input.description,
                 status: input.status,
+                startDate: input.startDate,
+                endDate: input.endDate,
+                description: input.description,  
             },
         
             // COMMENT: if you want to send a specific thing back to the user
@@ -52,15 +58,15 @@ export const tasksRouter = createTRPCRouter({
         id: z.string()
     }))
     .mutation(async ({ctx, input }) => {
-        const isMyTask =  await prisma.tasks.findUniqueOrThrow({
+        const isMyTask = await prisma.tasks.findUniqueOrThrow({
             where: {
                id: input.id 
             }
         }).catch(() => {
-            throw new TRPCError({message: "task does not exist", code: "BAD_REQUEST"});
+            throw new TRPCError({message: "Task does not exist", code: "BAD_REQUEST"});
         });
         if(isMyTask.userId != ctx.session.user.id) {
-            throw new TRPCError({message: "task does not exist", code: "BAD_REQUEST"});
+            throw new TRPCError({message: "Task does not exist", code: "BAD_REQUEST"});
         }
         return await prisma.tasks.delete({
             where: {
