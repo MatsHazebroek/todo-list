@@ -8,6 +8,7 @@ import Sidebar from "../components/sidebar";
 
 const Users: NextPage = () => {
   const users = api.users.getUsers.useQuery();
+  const deleteUser = api.users.deleteUser.useMutation();
 
   if (users.isLoading) {
     return <Loading />;
@@ -69,7 +70,11 @@ const Users: NextPage = () => {
                       <div className="w-1/4">
                         <button
                           className="rounded bg-red-500 py-2 px-4 font-bold text-white hover:bg-red-700"
-                          //   onClick={() => handleDelete(user)}
+                          onClick={() => {
+                            console.log("alksjhdjlkashdl");
+
+                            deleteUser.mutate({ id: user.id });
+                          }}
                         >
                           Delete
                         </button>
