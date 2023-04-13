@@ -1,9 +1,11 @@
 import { type NextPage } from "next";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { api } from "n/utils/api";
 
-const index: NextPage = () => {
+const Index: NextPage = () => {
+  const { status, data: session } = useSession();
+
   const users = api.users.getUsers.useQuery();
 
   return (
@@ -161,43 +163,47 @@ const index: NextPage = () => {
                 </span>
               </Link>
             </li>
-
-            <li className="px-5">
-              <div className="flex h-8 flex-row items-center">
-                <div className="text-sm font-light tracking-wide text-gray-500">
-                  Admin
-                </div>
-              </div>
-            </li>
-            <li>
-              <Link
-                href="Users"
-                className="relative flex h-11 flex-row items-center border-l-4 border-transparent pr-6 text-gray-600 hover:border-sky-400 hover:bg-gray-50 hover:text-gray-800 focus:outline-none"
-              >
-                <span className="ml-4 inline-flex items-center justify-center">
-                  <svg
-                    className="h-5 w-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
+            {session?.user.admin ? (
+              <>
+                <li className="px-5">
+                  <div className="flex h-8 flex-row items-center">
+                    <div className="text-sm font-light tracking-wide text-gray-500">
+                      Admin
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <Link
+                    href="Users"
+                    className="relative flex h-11 flex-row items-center border-l-4 border-transparent pr-6 text-gray-600 hover:border-sky-400 hover:bg-gray-50 hover:text-gray-800 focus:outline-none"
                   >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
-                    ></path>
-                  </svg>
-                </span>
-                <span className="ml-2 truncate text-sm tracking-wide">
-                  Users
-                </span>
-                {/* <span className="ml-auto rounded-full bg-green-50 px-2 py-0.5 text-xs font-medium tracking-wide text-green-500">
-                  15
-                </span> */}
-              </Link>
-            </li>
+                    <span className="ml-4 inline-flex items-center justify-center">
+                      <svg
+                        className="h-5 w-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
+                        ></path>
+                      </svg>
+                    </span>
+                    <span className="ml-2 truncate text-sm tracking-wide">
+                      Users
+                    </span>
+                    <span className="ml-auto rounded-full bg-green-50 px-2 py-0.5 text-xs font-medium tracking-wide text-green-500">
+                      {users.data?.length}
+                    </span>
+                  </Link>
+                </li>
+              </>
+            ) : null}
+
             <li className="px-5">
               <div className="flex h-8 flex-row items-center">
                 <div className="text-sm font-light tracking-wide text-gray-500">
@@ -307,4 +313,4 @@ const index: NextPage = () => {
   );
 };
 
-export default index;
+export default Index;
