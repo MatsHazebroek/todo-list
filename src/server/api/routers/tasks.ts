@@ -55,23 +55,32 @@ export const tasksRouter = createTRPCRouter({
     }),
     deleteTask: protectedProcedure
     .input(z.object({
-        id: z.string()
+        id: z.array(z.string())
     }))
     .mutation(async ({ctx, input }) => {
-        const isMyTask = await prisma.tasks.findUniqueOrThrow({
-            where: {
-               id: input.id 
+            for(let i = 0; i < input.id.length; i++) {
+                const isMyTask = await prisma.tasks.findUnique({
+                    where: {
+                        id: input.id[i]
+                    }
+                })
+                if (!isMyTask || isMyTask.userId != ctx.session.user.id) {
+                    throw new TRPCError({ message: "Task does not exist", code: "BAD_REQUEST" });
+                }
+
             }
-        }).catch(() => {
-            throw new TRPCError({message: "Task does not exist", code: "BAD_REQUEST"});
-        });
-        if(isMyTask.userId != ctx.session.user.id) {
-            throw new TRPCError({message: "Task does not exist", code: "BAD_REQUEST"});
-        }
-        return await prisma.tasks.delete({
-            where: {
-                id: input.id
+            
+            for(let i = 0; i < input.id.length; i++) {
+                await prisma.tasks.delete({
+                    where: {
+                        id: input.id[i]
+                    }
+                }).catch(() => {
+                    throw new TRPCError({message: "Something went wrong", code: "BAD_REQUEST"});
+                })
             }
-        })
+            return input.id
+   
+        
     })
 });
