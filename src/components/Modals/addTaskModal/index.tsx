@@ -1,4 +1,3 @@
-import { api } from "n/utils/api";
 import type { NextPage } from "next";
 import React, { useEffect, useState } from "react";
 
@@ -9,7 +8,13 @@ type props = {
     size: number;
   };
   show: boolean;
-  onClose: () => void;
+  onClose: (data?: {
+    title: string;
+    description: string;
+    status: string;
+    startDate: Date;
+    endDate: Date;
+  }) => void;
   className?: string;
   children?: React.ReactNode;
 };
@@ -35,15 +40,9 @@ const Index: NextPage<props> = (props) => {
 
   const [title, setTitle] = useState("");
   const [status, setStatus] = useState("");
-  const [startDatum, setStartDatum] = useState(new Date());
-  const [eindDatum, setEindDatum] = useState(new Date());
+  const [startDatum, setStartDatum] = useState<Date>(new Date());
+  const [eindDatum, setEindDatum] = useState<Date>(new Date());
   const [description, setDescription] = useState("");
-
-  const createTask = api.tasks.createTasks.useMutation({
-    onError: (error) => {
-      console.log(error);
-    },
-  });
 
   if (props.show == false) return <></>;
   return (
@@ -110,7 +109,6 @@ const Index: NextPage<props> = (props) => {
                     onChange={(event) => {
                       setTitle(event.target.value);
                     }}
-                    required
                   />
                 </div>
                 <div>
@@ -137,8 +135,8 @@ const Index: NextPage<props> = (props) => {
                   </label>
                   <input
                     type="date"
-                    onChange={() => {
-                      setStartDatum(new Date());
+                    onChange={(event) => {
+                      setStartDatum(new Date(event.target.value));
                     }}
                   />
                 </div>
@@ -171,14 +169,23 @@ const Index: NextPage<props> = (props) => {
                 type="submit"
                 className="hover:bg-primary-800 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 inline-flex items-center rounded-lg bg-blue-500 px-5 py-2.5 text-center text-sm font-medium text-white focus:outline-none focus:ring-4"
                 onClick={() => {
-                  createTask.mutate({
-                    title: title,
-                    status: status,
-                    startDate: startDatum,
-                    endDate: eindDatum,
-                    description: description,
-                  });
-                  props.onClose();
+                  if (
+                    !title ||
+                    !status ||
+                    !startDatum ||
+                    !eindDatum ||
+                    !description
+                  ) {
+                    alert("Vul alle velden in");
+                  } else {
+                    props.onClose({
+                      title: title,
+                      status: status,
+                      startDate: startDatum,
+                      endDate: eindDatum,
+                      description: description,
+                    });
+                  }
                 }}
               >
                 <svg

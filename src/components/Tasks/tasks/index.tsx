@@ -8,8 +8,8 @@ type props = {
   userId: string;
   description: string;
   status: string;
-  startDate: Date;
-  endDate: Date;
+  startDate: Date | null;
+  endDate: Date | null;
   onChecked: (id: string, checked: boolean) => void;
 };
 
@@ -30,20 +30,25 @@ function Index(props: props) {
           setEditTaskModal(false);
         }}
         show={editTaskModal}
+        parent={props}
       />
       <div className="flex items-center gap-y-5 p-4" draggable>
         <div className="">{/* <GrDrag /> */}</div>
         <div className="w-1/5">{props.title}</div>
         <div className="w-2/5">{props.description}</div>
-        <div className="w-1/5">{props.startDate.toDateString()}</div>
-        <div className="w-1/5">{props.endDate.toDateString()}</div>
+        <div className="w-1/5">
+          {props.startDate != null && props.startDate.toDateString()}
+        </div>
+        <div className="w-1/5">
+          {props.endDate != null && props.endDate.toDateString()}
+        </div>
         <div className="w-1/5">{props.status}</div>
         <div className="w-1/5">Completed</div>
         <div className="w-1/5">
           <button
             onClick={() => {
-              // Handle the click event for the edit button here
-              // console.log("Edit button clicked!");
+              console.log(props.id);
+
               setEditTaskModal(true);
             }}
             className="flex h-5 w-5 items-center justify-center rounded border-gray-300 focus:outline-none"

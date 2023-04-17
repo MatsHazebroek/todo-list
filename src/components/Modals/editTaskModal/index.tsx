@@ -11,6 +11,15 @@ type props = {
   onClose: () => void;
   className?: string;
   children?: React.ReactNode;
+  parent: {
+    title: string;
+    id: string;
+    userId: string;
+    description: string;
+    status: string;
+    startDate: Date | null;
+    endDate: Date | null;
+  };
 };
 
 const Index: NextPage<props> = (props) => {
@@ -57,7 +66,7 @@ const Index: NextPage<props> = (props) => {
               {/* <!-- Modal header --> */}
               <div className="mb-4 flex items-center justify-between rounded-t border-b pb-4 dark:border-gray-600 sm:mb-5">
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                  Taak aanmaken
+                  Taak veranderen
                 </h3>
                 <button
                   type="button"
@@ -94,8 +103,8 @@ const Index: NextPage<props> = (props) => {
                     name="title"
                     id="title"
                     className="focus:ring-primary-600 focus:border-primary-600 dark:focus:ring-primary-500 dark:focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
-                    placeholder="Typ hier de titel van de taak"
                     required
+                    defaultValue={props.parent.title}
                   />
                 </div>
                 <div>
@@ -106,24 +115,52 @@ const Index: NextPage<props> = (props) => {
                     id="category"
                     className="focus:ring-primary-500 focus:border-primary-500 dark:focus:ring-primary-500 dark:focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
                   >
-                    <option selected>Selecteer prioriteit</option>
-                    <option value="1">Prioriteit 1</option>
-                    <option value="2">Prioriteit 2</option>
-                    <option value="3">Prioriteit 3</option>
-                    <option value="4">Prioriteit 4</option>
+                    <option
+                      selected={
+                        !["1", "2", "3", "4"].includes(props.parent.status)
+                      }
+                    >
+                      Selecteer prioriteit
+                    </option>
+                    <option selected={props.parent.status == "1"} value="1">
+                      Prioriteit 1
+                    </option>
+                    <option selected={props.parent.status == "2"} value="2">
+                      Prioriteit 2
+                    </option>
+                    <option selected={props.parent.status == "3"} value="3">
+                      Prioriteit 3
+                    </option>
+                    <option selected={props.parent.status == "4"} value="4">
+                      Prioriteit 4
+                    </option>
                   </select>
                 </div>
                 <div>
                   <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
                     Start Datum
                   </label>
-                  <input type="date" />
+                  <input
+                    type="date"
+                    defaultValue={
+                      props.parent.endDate != null
+                        ? props.parent.endDate.toISOString().substring(0, 10)
+                        : new Date().toISOString().substring(0, 10)
+                    }
+                  />
                 </div>
                 <div>
                   <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
                     Eind Datum
                   </label>
-                  <input type="date" />
+                  <input
+                    type="date"
+                    defaultValue={
+                      props.parent.endDate != null
+                        ? props.parent.endDate.toISOString().substring(0, 10)
+                        : new Date().toISOString().substring(0, 10)
+                    }
+                  />
                 </div>
                 <div className="sm:col-span-2">
                   <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
@@ -132,7 +169,7 @@ const Index: NextPage<props> = (props) => {
                   <textarea
                     id="description"
                     className="focus:ring-primary-500 focus:border-primary-500 dark:focus:ring-primary-500 dark:focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
-                    placeholder="Typ hier de beschrijving van de taak"
+                    defaultValue={props.parent.description}
                   ></textarea>
                 </div>
               </div>
@@ -155,7 +192,7 @@ const Index: NextPage<props> = (props) => {
                     clip-rule="evenodd"
                   ></path>
                 </svg>
-                Maak taak aan
+                Pas taak aan
               </button>
             </div>
           </div>
