@@ -123,7 +123,7 @@ const Index: NextPage = () => {
                   </svg>
                 </span>
                 <span className="ml-2 truncate text-sm tracking-wide">
-                  Notificaties
+                  ! Feature (Notify)
                 </span>
                 {/* <span className="ml-auto rounded-full bg-red-50 px-2 py-0.5 text-xs font-medium tracking-wide text-red-500">
                   1.2k
@@ -159,7 +159,7 @@ const Index: NextPage = () => {
                   </svg>
                 </span>
                 <span className="ml-2 truncate text-sm tracking-wide">
-                  Beschikbare Taken
+                  ! Feature (Available Tasks)
                 </span>
               </Link>
             </li>
@@ -194,7 +194,7 @@ const Index: NextPage = () => {
                       </svg>
                     </span>
                     <span className="ml-2 truncate text-sm tracking-wide">
-                      Users
+                      ! WIP (Users)
                     </span>
                     <span className="ml-auto rounded-full bg-green-50 px-2 py-0.5 text-xs font-medium tracking-wide text-green-500">
                       {users.data?.length}
@@ -233,7 +233,7 @@ const Index: NextPage = () => {
                   </svg>
                 </span>
                 <span className="ml-2 truncate text-sm tracking-wide">
-                  Profiel
+                  ! WIP (Profiel)
                 </span>
               </Link>
             </li>
@@ -265,7 +265,7 @@ const Index: NextPage = () => {
                   </svg>
                 </span>
                 <span className="ml-2 truncate text-sm tracking-wide">
-                  Instellingen
+                  ! WIP (Instellingen)
                 </span>
               </Link>
             </li>
