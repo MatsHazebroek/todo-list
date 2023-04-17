@@ -1,7 +1,7 @@
-import Auth from "../components/auth/Auth";
+import Auth from "../components/Basics/auth/Auth";
 import { type NextPage } from "next";
 import Head from "next/head";
-import Sidebar from "../components/sidebar";
+import Sidebar from "../components/Basics/sidebar";
 
 import { useSession } from "next-auth/react";
 

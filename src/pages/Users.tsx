@@ -2,9 +2,9 @@ import { type NextPage } from "next";
 import Head from "next/head";
 
 import { api } from "../utils/api";
-import Loading from "../components/loading";
-import Auth from "../components/auth/Auth";
-import Sidebar from "../components/sidebar";
+import Loading from "../components/Basics/loading";
+import Auth from "../components/Basics/auth/Auth";
+import Sidebar from "../components/Basics/sidebar";
 
 const Users: NextPage = () => {
   const users = api.users.getUsers.useQuery();
