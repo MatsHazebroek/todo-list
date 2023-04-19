@@ -2,6 +2,11 @@ import type { NextPage } from "next";
 import React, { useEffect, useState } from "react";
 
 type props = {
+  title: {
+    text: string;
+    color: string;
+    size: number;
+  };
   show: boolean;
   onClose: (data?: {
     title: string;
@@ -61,13 +66,13 @@ const Index: NextPage<props> = (props) => {
           <div className="flex h-full w-full flex-col">
             <div className="relative flex-grow p-4">
               {/* <!-- Modal header --> */}
-              <div className="mb-4 flex items-center justify-between rounded-t border-b pb-4 sm:mb-5">
-                <h3 className="text-lg font-semibold text-gray-900">
+              <div className="mb-4 flex items-center justify-between rounded-t border-b pb-4 dark:border-gray-600 sm:mb-5">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                   Taak aanmaken
                 </h3>
                 <button
                   type="button"
-                  className="ml-auto inline-flex items-center rounded-lg bg-transparent p-1.5 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900"
+                  className="ml-auto inline-flex items-center rounded-lg bg-transparent p-1.5 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white"
                   data-modal-toggle="defaultModal"
                   onClick={() => {
                     props.onClose();
@@ -92,14 +97,14 @@ const Index: NextPage<props> = (props) => {
               {/* <!-- Modal body --> */}
               <div className="mb-4 grid gap-4 sm:grid-cols-2">
                 <div>
-                  <label className="mb-2 block text-sm font-medium text-gray-900">
+                  <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
                     Titel
                   </label>
                   <input
                     type="text"
                     name="title"
                     id="title"
-                    className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900"
+                    className="focus:ring-primary-600 focus:border-primary-600 dark:focus:ring-primary-500 dark:focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
                     placeholder="Typ hier de titel van de taak"
                     onChange={(event) => {
                       setTitle(event.target.value);
@@ -107,12 +112,12 @@ const Index: NextPage<props> = (props) => {
                   />
                 </div>
                 <div>
-                  <label className="mb-2 block text-sm font-medium text-gray-900">
+                  <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
                     Status
                   </label>
                   <select
                     id="category"
-                    className="focus:ring-primary-500 focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900"
+                    className="focus:ring-primary-500 focus:border-primary-500 dark:focus:ring-primary-500 dark:focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
                     onChange={(event) => {
                       setStatus(event.target.value);
                     }}
@@ -125,7 +130,7 @@ const Index: NextPage<props> = (props) => {
                   </select>
                 </div>
                 <div>
-                  <label className="mb-2 block text-sm font-medium text-gray-900">
+                  <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
                     Start Datum
                   </label>
                   <input
@@ -136,7 +141,7 @@ const Index: NextPage<props> = (props) => {
                   />
                 </div>
                 <div>
-                  <label className="mb-2 block text-sm font-medium text-gray-900">
+                  <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
                     Eind Datum
                   </label>
                   <input
@@ -147,12 +152,12 @@ const Index: NextPage<props> = (props) => {
                   />
                 </div>
                 <div className="sm:col-span-2">
-                  <label className="mb-2 block text-sm font-medium text-gray-900">
+                  <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
                     Beschrijving
                   </label>
                   <textarea
                     id="description"
-                    className="focus:ring-primary-500 focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900"
+                    className="focus:ring-primary-500 focus:border-primary-500 dark:focus:ring-primary-500 dark:focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
                     placeholder="Typ hier de beschrijving van de taak"
                     onChange={(event) => {
                       setDescription(event.target.value);
@@ -162,7 +167,7 @@ const Index: NextPage<props> = (props) => {
               </div>
               <button
                 type="submit"
-                className="hover:bg-primary-800 focus:ring-primary-300 inline-flex items-center rounded-lg bg-blue-500 px-5 py-2.5 text-center text-sm font-medium text-white focus:outline-none focus:ring-4"
+                className="hover:bg-primary-800 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 inline-flex items-center rounded-lg bg-blue-500 px-5 py-2.5 text-center text-sm font-medium text-white focus:outline-none focus:ring-4"
                 onClick={() => {
                   if (
                     !title ||
