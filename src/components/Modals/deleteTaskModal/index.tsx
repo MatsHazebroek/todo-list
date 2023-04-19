@@ -2,11 +2,6 @@ import type { NextPage } from "next";
 import React, { useEffect } from "react";
 
 type props = {
-  title: {
-    text: string;
-    color: string;
-    size: number;
-  };
   show: boolean;
   onClose: () => void;
   className?: string;
@@ -55,13 +50,13 @@ const Index: NextPage<props> = (props) => {
           <div className="flex h-full w-full flex-col">
             <div className="relative flex-grow p-4">
               {/* <!-- Modal header --> */}
-              <div className="mb-4 flex items-center justify-between rounded-t border-b pb-4 dark:border-gray-600 sm:mb-5">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+              <div className="mb-4 flex items-center justify-between rounded-t border-b pb-4 sm:mb-5">
+                <h3 className="text-lg font-semibold text-gray-900">
                   Taak verwijderen
                 </h3>
                 <button
                   type="button"
-                  className="ml-auto inline-flex items-center rounded-lg bg-transparent p-1.5 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white"
+                  className="ml-auto inline-flex items-center rounded-lg bg-transparent p-1.5 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900"
                   data-modal-toggle="defaultModal"
                   onClick={() => {
                     props.onClose();
@@ -87,7 +82,7 @@ const Index: NextPage<props> = (props) => {
               <form action="#">
                 <div className="mb-4 grid gap-4 sm:grid-cols-2">
                   <div className="sm:col-span-2">
-                    <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+                    <label className="mb-2 block text-sm font-medium text-gray-900">
                       <h1 className="text-center text-4xl">
                         Weet je het zeker?
                       </h1>
@@ -97,7 +92,7 @@ const Index: NextPage<props> = (props) => {
                 <div className="flex items-center justify-center pt-4">
                   <button
                     type="button"
-                    className="mr-4 inline-flex items-center rounded-lg bg-gray-100 px-4 py-2 text-center text-sm font-medium text-gray-700 hover:bg-gray-200 focus:outline-none focus:ring-4 focus:ring-gray-300 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
+                    className="mr-4 inline-flex items-center rounded-lg bg-gray-100 px-4 py-2 text-center text-sm font-medium text-gray-700 hover:bg-gray-200 focus:outline-none focus:ring-4 focus:ring-gray-300"
                     onClick={props.onClose}
                   >
                     Annuleren
@@ -105,7 +100,7 @@ const Index: NextPage<props> = (props) => {
                   <button
                     type="submit"
                     onClick={props.onAccept}
-                    className="inline-flex items-center rounded-lg bg-red-500 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+                    className="inline-flex items-center rounded-lg bg-red-500 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300"
                   >
                     Verwijder
                   </button>
