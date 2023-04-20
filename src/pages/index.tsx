@@ -29,11 +29,10 @@ const PageContent = () => {
       <main data-theme="light">
         <div className="fixed top-0 left-0 flex h-screen w-screen flex-row">
           <Sidebar />
-          {/* make a container with margins */}
-          <div className="h-screen w-full overflow-y-auto overflow-x-hidden">
-            <div className="w-100 ml-10 mr-10 mt-[5%] h-[85%] rounded-2xl p-4 shadow-lg">
+          <div className="mr-10 ml-10 max-h-[800px] w-full overflow-y-auto">
+            <div className="container relative mx-auto mt-10 overflow-x-auto bg-gray-100 px-4 py-4">
               <div className="flex items-center justify-between">
-                <h1 className="text-2xl font-bold">Taken</h1>
+                <h1 className="mb-4 text-3xl font-bold">Taken</h1>
                 <button
                   className="rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
                   onClick={() => {

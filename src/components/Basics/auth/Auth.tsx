@@ -13,7 +13,6 @@ function Auth(props: props) {
 
   if (status === "unauthenticated") {
     router.push("/Login").catch(() => {
-      console.log("error");
       return;
     });
     return <></>;

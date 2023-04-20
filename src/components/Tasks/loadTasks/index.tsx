@@ -4,7 +4,7 @@ import DeleteTaskModal from "n/components/Modals/deleteTaskModal";
 
 import { api } from "n/utils/api";
 import { type NextPage } from "next";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Tasks from "../tasks";
 type props = {
   show: boolean;
@@ -28,6 +28,7 @@ const Index: NextPage<props> = (props) => {
   >(new Map());
   const [checked, setChecked] = useState<Set<string>>(new Set());
   const [amountChecked, setAmountChecked] = useState(0);
+  const [changeStatusOf, setChangeStatusOf] = useState<string | null>(null);
   const createTask = api.tasks.createTasks.useMutation({
     onError: (error) => {
       console.log(error);
@@ -58,11 +59,17 @@ const Index: NextPage<props> = (props) => {
       setDeleteModal(false);
     },
   });
+  useEffect(() => {
+    if (changeStatusOf == null) return;
+    const newTasks = tasks;
+    newTasks.delete(changeStatusOf);
+    setTasks(newTasks);
+    setChangeStatusOf(null);
+  }, [changeStatusOf]);
 
   if (loadTasks.isLoading || deleteTask.isLoading) {
     return <Loading />;
   }
-
   return (
     <>
       <AddTaskModal
@@ -84,56 +91,49 @@ const Index: NextPage<props> = (props) => {
         show={deleteModal}
       />
 
-      {tasks.size ? (
-        <div className="mt-4 rounded-lg border border-solid border-[#e6e6e6] bg-[#f2f2f2]">
-          <div className="flex items-center gap-y-5 p-4 font-bold">
-            <div className="w-1/5">Titel</div>
-            <div className="w-2/5">Beschrijving</div>
-            <div className="w-1/5">Start Datum</div>
-            <div className="w-1/5">Eind Datum</div>
-            <div className="w-1/5">Status</div>
-            <div className="w-1/5">Klaar</div>
-            <div className="w-1/5">Verander</div>
-            <div className="w-1/5">Verwijder</div>
-          </div>
-          {[...tasks].map((task, i) => (
-            <Tasks
-              onChecked={(id, test) => {
-                const isChecked = checked;
-                if (test) {
-                  isChecked.add(id);
-                  setChecked(isChecked);
-                  setAmountChecked(isChecked.size);
-                  return;
-                }
+      <div className="mb-4 flex flex-col rounded-md bg-white p-4 shadow md:flex-row">
+        <div className="w-full text-center md:w-1/6">Titel</div>
+        <div className="w-full text-center md:w-2/6">Beschrijving</div>
+        <div className="w-full text-center md:w-1/6">Start Datum</div>
+        <div className="w-full text-center md:w-1/6">Eind Datum</div>
+        <div className="w-full text-center md:w-1/6">Status</div>
+        <div className="w-full text-center md:w-2/6">Acties</div>
+      </div>
 
-                isChecked.delete(id);
-                setChecked(isChecked);
-                setAmountChecked(isChecked.size);
-              }}
-              onEdit={(data) => {
-                const kaas = tasks;
-                kaas.set(data.id, { ...data });
-                setTasks(kaas);
-              }}
-              key={i}
-              {...task[1]}
-            />
-          ))}
-        </div>
-      ) : (
-        <div className="mt-4 text-center font-bold text-gray-600">
-          Er zijn geen taken beschikbaar.
-        </div>
-      )}
+      {[...tasks].map((task, i) => (
+        <Tasks
+          onCompleted={(id) => {
+            setChangeStatusOf(id);
+          }}
+          onChecked={(id, test) => {
+            const isChecked = checked;
+            if (test) {
+              isChecked.add(id);
+              setChecked(isChecked);
+              setAmountChecked(isChecked.size);
+              return;
+            }
 
-      <div className="flex items-end justify-end">
+            isChecked.delete(id);
+            setChecked(isChecked);
+            setAmountChecked(isChecked.size);
+          }}
+          onEdit={(data) => {
+            const edit = tasks;
+            edit.set(data.id, { ...data });
+            setTasks(edit);
+          }}
+          key={i}
+          {...task[1]}
+        />
+      ))}
+
+      <div className="inset-x-0 bottom-0 flex items-end justify-end">
         {amountChecked > 0 ? (
           <button
-            className="absolute bottom-28 rounded bg-red-500 py-2 px-4 font-bold text-white hover:bg-red-700"
+            className="rounded bg-red-500 py-2 px-4 font-bold text-white hover:bg-red-700"
             onClick={() => {
               setDeleteModal(true);
-              // console.log(checked);
             }}
           >
             Verwijder

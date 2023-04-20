@@ -32,7 +32,6 @@ const Index: NextPage<props> = (props) => {
       console.log(error);
     },
     onSuccess: (data) => {
-      console.log(data);
       props.onClose(data);
     },
   });

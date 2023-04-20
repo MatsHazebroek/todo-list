@@ -71,8 +71,6 @@ const Users: NextPage = () => {
                         <button
                           className="rounded bg-red-500 py-2 px-4 font-bold text-white hover:bg-red-700"
                           onClick={() => {
-                            console.log("alksjhdjlkashdl");
-
                             deleteUser.mutate({ id: user.id });
                           }}
                         >
