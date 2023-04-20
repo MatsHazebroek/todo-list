@@ -65,10 +65,10 @@ const Index: NextPage<props> = (props) => {
     newTasks.delete(changeStatusOf);
     setTasks(newTasks);
     setChangeStatusOf(null);
-  }, [changeStatusOf]);
+  }, [changeStatusOf, tasks]);
 
   if (loadTasks.isLoading || deleteTask.isLoading) {
-    return <Loading />;
+    return <></>;
   }
   return (
     <>
