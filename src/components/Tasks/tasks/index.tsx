@@ -5,19 +5,26 @@ import EditTaskModal from "n/components/Modals/editTaskModal";
 type props = {
   title: string;
   id: string;
-  userId: string;
+
   description: string;
   status: string;
   startDate: Date | null;
   endDate: Date | null;
   onChecked: (id: string, checked: boolean) => void;
+  onEdit: (props: {
+    id: string;
+    title: string;
+    description: string;
+    status: string;
+    startDate: Date | null;
+    endDate: Date | null;
+  }) => void;
 };
 
 function Index(props: props) {
   const [checked, setChecked] = useState(false);
   const [checkedItems, setCheckedItems] = useState(new Set());
   const [editTaskModal, setEditTaskModal] = useState(false);
-
   useEffect(() => {
     props.onChecked(props.id, checked);
   }, [checked]);
@@ -25,13 +32,19 @@ function Index(props: props) {
   return (
     <>
       <EditTaskModal
-        title={{ text: "Test", color: "black", size: 1.5 }}
-        onClose={() => {
+        onClose={(editedData) => {
+          if (editedData != null) {
+            props.onEdit(editedData);
+          }
+          setEditTaskModal(false);
+        }}
+        onCloseModal={() => {
           setEditTaskModal(false);
         }}
         show={editTaskModal}
-        parent={props}
+        parent={{ ...props }}
       />
+
       <div className="flex items-center gap-y-5 p-4" draggable>
         <div className="">{/* <GrDrag /> */}</div>
         <div className="w-1/5">{props.title}</div>

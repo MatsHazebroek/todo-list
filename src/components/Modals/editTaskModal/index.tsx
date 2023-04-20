@@ -1,20 +1,24 @@
+import { stat } from "fs";
+import { api } from "n/utils/api";
 import { type NextPage } from "next";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 type props = {
-  title: {
-    text: string;
-    color: string;
-    size: number;
-  };
   show: boolean;
-  onClose: () => void;
+  onCloseModal(): void;
+  onClose: (data?: {
+    id: string;
+    title: string;
+    description: string;
+    status: string;
+    startDate: Date | null;
+    endDate: Date | null;
+  }) => void;
   className?: string;
   children?: React.ReactNode;
   parent: {
     title: string;
     id: string;
-    userId: string;
     description: string;
     status: string;
     startDate: Date | null;
@@ -23,11 +27,20 @@ type props = {
 };
 
 const Index: NextPage<props> = (props) => {
+  const updateTask = api.tasks.updateTask.useMutation({
+    onError: (error) => {
+      console.log(error);
+    },
+    onSuccess: (data) => {
+      console.log(data);
+      props.onClose(data);
+    },
+  });
   useEffect(() => {
     window.addEventListener("keypress", (e: KeyboardEvent) => {
       //escape key pressed no key code
       if (e.key == "Escape") {
-        props.onClose();
+        props.onCloseModal();
       }
     });
     // cleanup this component
@@ -35,11 +48,21 @@ const Index: NextPage<props> = (props) => {
       window.removeEventListener("keypress", (e: KeyboardEvent) => {
         //escape key pressed no key code
         if (e.key == "Escape") {
-          props.onClose();
+          props.onCloseModal();
         }
       });
     };
   }, [props]);
+
+  const [title, setTitle] = useState(props.parent.title);
+  const [status, setStatus] = useState(props.parent.status);
+  const [startDatum, setStartDatum] = useState<Date>(
+    new Date(props.parent.startDate as Date)
+  );
+  const [eindDatum, setEindDatum] = useState<Date>(
+    new Date(props.parent.endDate as Date)
+  );
+  const [description, setDescription] = useState(props.parent.description);
 
   if (props.show == false) return <></>;
 
@@ -48,7 +71,7 @@ const Index: NextPage<props> = (props) => {
       <div
         className="absolute top-0 left-0 z-40 h-full w-full bg-black/20"
         onClick={() => {
-          props.onClose();
+          props.onCloseModal();
         }}
       ></div>
       <div className="absolute top-0 left-0  flex h-full w-full items-center justify-center">
@@ -63,17 +86,16 @@ const Index: NextPage<props> = (props) => {
         >
           <div className="flex h-full w-full flex-col">
             <div className="relative flex-grow p-4">
-              {/* <!-- Modal header --> */}
-              <div className="mb-4 flex items-center justify-between rounded-t border-b pb-4 dark:border-gray-600 sm:mb-5">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+              <div className="mb-4 flex items-center justify-between rounded-t border-b pb-4 sm:mb-5">
+                <h3 className="text-lg font-semibold text-gray-900">
                   Taak veranderen
                 </h3>
                 <button
                   type="button"
-                  className="ml-auto inline-flex items-center rounded-lg bg-transparent p-1.5 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white"
+                  className="ml-auto inline-flex items-center rounded-lg bg-transparent p-1.5 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900"
                   data-modal-toggle="defaultModal"
                   onClick={() => {
-                    props.onClose();
+                    props.onCloseModal();
                   }}
                 >
                   <svg
@@ -92,28 +114,33 @@ const Index: NextPage<props> = (props) => {
                   <span className="sr-only">Sluit scherm</span>
                 </button>
               </div>
-              {/* <!-- Modal body --> */}
               <div className="mb-4 grid gap-4 sm:grid-cols-2">
                 <div>
-                  <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+                  <label className="mb-2 block text-sm font-medium text-gray-900">
                     Titel
                   </label>
                   <input
                     type="text"
                     name="title"
                     id="title"
-                    className="focus:ring-primary-600 focus:border-primary-600 dark:focus:ring-primary-500 dark:focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                    className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900"
                     required
                     defaultValue={props.parent.title}
+                    onChange={(event) => {
+                      setTitle(event.target.value);
+                    }}
                   />
                 </div>
                 <div>
-                  <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+                  <label className="mb-2 block text-sm font-medium text-gray-900">
                     Status
                   </label>
                   <select
                     id="category"
-                    className="focus:ring-primary-500 focus:border-primary-500 dark:focus:ring-primary-500 dark:focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                    className="focus:ring-primary-500 focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900"
+                    onChange={(event) => {
+                      setStatus(event.target.value);
+                    }}
                   >
                     <option
                       selected={
@@ -137,7 +164,7 @@ const Index: NextPage<props> = (props) => {
                   </select>
                 </div>
                 <div>
-                  <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+                  <label className="mb-2 block text-sm font-medium text-gray-900">
                     Start Datum
                   </label>
                   <input
@@ -147,10 +174,13 @@ const Index: NextPage<props> = (props) => {
                         ? props.parent.endDate.toISOString().substring(0, 10)
                         : new Date().toISOString().substring(0, 10)
                     }
+                    onChange={(event) => {
+                      setStartDatum(new Date(event.target.value));
+                    }}
                   />
                 </div>
                 <div>
-                  <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+                  <label className="mb-2 block text-sm font-medium text-gray-900">
                     Eind Datum
                   </label>
                   <input
@@ -160,38 +190,39 @@ const Index: NextPage<props> = (props) => {
                         ? props.parent.endDate.toISOString().substring(0, 10)
                         : new Date().toISOString().substring(0, 10)
                     }
+                    onChange={(event) => {
+                      setEindDatum(new Date(event.target.value));
+                    }}
                   />
                 </div>
                 <div className="sm:col-span-2">
-                  <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+                  <label className="mb-2 block text-sm font-medium text-gray-900">
                     Beschrijving
                   </label>
                   <textarea
                     id="description"
-                    className="focus:ring-primary-500 focus:border-primary-500 dark:focus:ring-primary-500 dark:focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                    className="focus:ring-primary-500 focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900"
                     defaultValue={props.parent.description}
+                    onChange={(event) => {
+                      setDescription(event.target.value);
+                    }}
                   ></textarea>
                 </div>
               </div>
               <button
                 type="submit"
-                className="hover:bg-primary-800 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 inline-flex items-center rounded-lg bg-blue-500 px-5 py-2.5 text-center text-sm font-medium text-white focus:outline-none focus:ring-4"
+                className="hover:bg-primary-800 focus:ring-primary-300 inline-flex items-center rounded-lg bg-blue-500 px-5 py-2.5 text-center text-sm font-medium text-white focus:outline-none focus:ring-4"
                 onClick={() => {
-                  props.onClose();
+                  updateTask.mutate({
+                    id: props.parent.id,
+                    title: title,
+                    description: description,
+                    status: status,
+                    endDate: eindDatum,
+                    startDate: startDatum,
+                  });
                 }}
               >
-                <svg
-                  className="mr-1 -ml-1 h-6 w-6"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
-                    clip-rule="evenodd"
-                  ></path>
-                </svg>
                 Pas taak aan
               </button>
             </div>

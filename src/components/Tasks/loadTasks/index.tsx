@@ -1,6 +1,7 @@
 import Loading from "n/components/Basics/loading";
 import AddTaskModal from "n/components/Modals/addTaskModal";
 import DeleteTaskModal from "n/components/Modals/deleteTaskModal";
+
 import { api } from "n/utils/api";
 import { type NextPage } from "next";
 import { useState } from "react";
@@ -17,7 +18,6 @@ const Index: NextPage<props> = (props) => {
       string,
       {
         id: string;
-        userId: string;
         startDate: Date | null;
         endDate: Date | null;
         title: string;
@@ -28,16 +28,6 @@ const Index: NextPage<props> = (props) => {
   >(new Map());
   const [checked, setChecked] = useState<Set<string>>(new Set());
   const [amountChecked, setAmountChecked] = useState(0);
-  const deleteTask = api.tasks.deleteTask.useMutation({
-    onSuccess: (data) => {
-      const newTasks = tasks;
-      data.map((data) => {
-        newTasks.delete(data);
-      });
-      setTasks(newTasks);
-      setDeleteModal(false);
-    },
-  });
   const createTask = api.tasks.createTasks.useMutation({
     onError: (error) => {
       console.log(error);
@@ -58,6 +48,16 @@ const Index: NextPage<props> = (props) => {
       setTasks(newTasks);
     },
   });
+  const deleteTask = api.tasks.deleteTask.useMutation({
+    onSuccess: (data) => {
+      const newTasks = tasks;
+      data.map((data) => {
+        newTasks.delete(data);
+      });
+      setTasks(newTasks);
+      setDeleteModal(false);
+    },
+  });
 
   if (loadTasks.isLoading || deleteTask.isLoading) {
     return <Loading />;
@@ -66,7 +66,6 @@ const Index: NextPage<props> = (props) => {
   return (
     <>
       <AddTaskModal
-        title={{ text: "Test", color: "black", size: 1.5 }}
         onClose={(data) => {
           if (data == undefined) {
             return props.onClose();
@@ -79,7 +78,6 @@ const Index: NextPage<props> = (props) => {
         onAccept={() => {
           deleteTask.mutate({ id: [...checked] });
         }}
-        title={{ text: "Test", color: "black", size: 1.5 }}
         onClose={() => {
           setDeleteModal(false);
         }}
@@ -89,10 +87,10 @@ const Index: NextPage<props> = (props) => {
       {tasks.size ? (
         <div className="mt-4 rounded-lg border border-solid border-[#e6e6e6] bg-[#f2f2f2]">
           <div className="flex items-center gap-y-5 p-4 font-bold">
-            <div className="w-1/5">Title</div>
-            <div className="w-2/5">Description</div>
-            <div className="w-1/5">Created At</div>
-            <div className="w-1/5">End Date</div>
+            <div className="w-1/5">Titel</div>
+            <div className="w-2/5">Beschrijving</div>
+            <div className="w-1/5">Start Datum</div>
+            <div className="w-1/5">Eind Datum</div>
             <div className="w-1/5">Status</div>
             <div className="w-1/5">Klaar</div>
             <div className="w-1/5">Verander</div>
@@ -108,9 +106,15 @@ const Index: NextPage<props> = (props) => {
                   setAmountChecked(isChecked.size);
                   return;
                 }
+
                 isChecked.delete(id);
                 setChecked(isChecked);
                 setAmountChecked(isChecked.size);
+              }}
+              onEdit={(data) => {
+                const kaas = tasks;
+                kaas.set(data.id, { ...data });
+                setTasks(kaas);
               }}
               key={i}
               {...task[1]}
