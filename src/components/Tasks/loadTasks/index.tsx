@@ -1,4 +1,3 @@
-import Loading from "n/components/Basics/loading";
 import AddTaskModal from "n/components/Modals/addTaskModal";
 import DeleteTaskModal from "n/components/Modals/deleteTaskModal";
 
