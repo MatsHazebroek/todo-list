@@ -17,9 +17,9 @@ export const usersRouter = createTRPCRouter({
         }).catch(() => {
             throw new TRPCError({message: "JE BENT GEEN USER", code: "BAD_REQUEST"})
         })
-        if(isAdmin.admin != true) {
-            throw new TRPCError({message: "JE BENT GEEN ADMIN", code: "UNAUTHORIZED"})
-        }
+        // if(isAdmin.admin != true) {
+        //     throw new TRPCError({message: "JE BENT GEEN ADMIN", code: "UNAUTHORIZED"})
+        // }
         return await prisma.user.findMany({
             select: {
                 id: true,

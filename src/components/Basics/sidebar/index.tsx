@@ -163,7 +163,7 @@ const Index: NextPage = () => {
                 </span>
               </Link>
             </li>
-            {session?.user.admin ? (
+            {/* {session?.user.admin ? ( */}
               <>
                 <li className="px-5">
                   <div className="flex h-8 flex-row items-center">
@@ -202,7 +202,41 @@ const Index: NextPage = () => {
                   </Link>
                 </li>
               </>
-            ) : null}
+            {/* ) : null} */}
+
+            <li className="px-5">
+              <div className="flex h-8 flex-row items-center">
+                <div className="text-sm font-light tracking-wide text-gray-500">
+                  Groepen
+                </div>
+              </div>
+            </li>
+            <li>
+              <Link
+                href="Groep"
+                className="relative flex h-11 flex-row items-center border-l-4 border-transparent pr-6 text-gray-600 hover:border-sky-400 hover:bg-gray-50 hover:text-gray-800 focus:outline-none"
+              >
+                <span className="ml-4 inline-flex items-center justify-center">
+                  <svg
+                    className="h-5 w-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                    ></path>
+                  </svg>
+                </span>
+                <span className="ml-2 truncate text-sm tracking-wide">
+                  Groep
+                </span>
+              </Link>
+            </li>
 
             <li className="px-5">
               <div className="flex h-8 flex-row items-center">

@@ -32,7 +32,7 @@ function Index(props: props) {
 
   useEffect(() => {
     props.onChecked(props.id, checked);
-  }, [checked]);
+  }, [checked, props]);
 
   const deleteTask = api.tasks.deleteTask.useMutation({
     onSuccess: (data) => {
